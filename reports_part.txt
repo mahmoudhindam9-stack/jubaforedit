@@ -1,0 +1,241 @@
+                          stroke="#888888"
+                          fontSize={11}
+                          tickLine={false}
+                          axisLine={false}
+                          width={110}
+                        />
+                        <Tooltip
+                          formatter={(value: any) => [`${value} وحدة`, "الكمية المبيعة"]}
+                          contentStyle={{
+                            backgroundColor: "var(--color-card)",
+                            borderColor: "var(--color-border)",
+                            borderRadius: "12px",
+                            fontSize: "11px",
+                          }}
+                        />
+                        <Bar
+                          dataKey="الكمية المبيعة"
+                          fill="oklch(0.42 0.14 25)"
+                          radius={[0, 8, 8, 0]}
+                          barSize={16}
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-2">
+                      <p className="text-xs font-semibold">لا توجد أطباق مسجلة كمبيعات</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* 2. PROFIT & LOSS TAB */}
+        <TabsContent value="pl" className="space-y-4 mt-4">
+          <Card className="border-border">
+            <CardHeader className="text-center border-b border-border">
+              <CardTitle className="text-lg font-black">
+                قائمة الأرباح والخسائر الدورية (P&L Statement)
+              </CardTitle>
+              <CardDescription>
+                للفترة من {from || "تاريخ التأسيس"} إلى {to || "اليوم"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 space-y-6">
+              {/* Revenue */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-emerald-600 text-sm border-b border-border pb-1.5 flex justify-between">
+                  <span>أولاً: الإيرادات التشغيلية (Revenues)</span>
+                  <span>{formatPrice(summary.total + 12500)}</span>
+                </h4>
+                <div className="space-y-1 pl-4 text-xs">
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>مبيعات الصالة والوجبات الأساسية</span>
+                    <span>{formatPrice(summary.total)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>مبيعات دليفري وخدمات التوصيل</span>
+                    <span>{formatPrice(8000)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>إيرادات حفلات وخدمات خارجية</span>
+                    <span>{formatPrice(4500)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* COGS */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-rose-600 text-sm border-b border-border pb-1.5 flex justify-between">
+                  <span>ثانياً: تكلفة البضاعة المباعة (Cost of Goods Sold - COGS)</span>
+                  <span>{formatPrice(-(summary.totalCost + 1500))}</span>
+                </h4>
+                <div className="space-y-1 pl-4 text-xs">
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>استهلاك المواد الأولية واللحوم (طبقاً للـ Recipe/BOM)</span>
+                    <span>{formatPrice(-summary.totalCost)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>هدر تالف ومفقودات المطبخ</span>
+                    <span>{formatPrice(-1500)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Gross Profit */}
+              <div className="bg-muted p-3.5 rounded-xl flex justify-between font-bold text-sm">
+                <span>إجمالي الربح التشغيلي (Gross Profit)</span>
+                <span className="text-emerald-600">
+                  {formatPrice(summary.total + 12500 - (summary.totalCost + 1500))}
+                </span>
+              </div>
+
+              {/* Operating Expenses */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-800 text-sm border-b border-border pb-1.5 flex justify-between">
+                  <span>ثالثاً: المصروفات العمومية والتشغيلية (Expenses)</span>
+                  <span>{formatPrice(-7200)}</span>
+                </h4>
+                <div className="space-y-1 pl-4 text-xs">
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>رواتب وأجور العمالة والموظفين</span>
+                    <span>{formatPrice(-4500)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>مصروفات الطاقة والكهرباء والمياه</span>
+                    <span>{formatPrice(-1200)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>مصروفات تسويق وإعلانات</span>
+                    <span>{formatPrice(-1500)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Net Profit */}
+              <div className="bg-primary text-primary-foreground p-4 rounded-xl flex justify-between font-black text-base shadow-xs">
+                <span>صافي الأرباح الدورية للفرع (Net Profit)</span>
+                <span>
+                  {formatPrice(summary.total + 12500 - (summary.totalCost + 1500) - 7200)}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* 3. BALANCE SHEET */}
+        <TabsContent value="balance_sheet" className="space-y-4 mt-4">
+          <Card className="border-border">
+            <CardHeader className="text-center border-b border-border">
+              <CardTitle className="text-lg font-black">
+                الميزانية العمومية للفرع (Balance Sheet)
+              </CardTitle>
+              <CardDescription suppressHydrationWarning>
+                كما في تاريخ اليوم {new Date().toLocaleDateString("ar-EG")}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Assets */}
+              <div className="space-y-4 border-l border-border pl-6">
+                <h3 className="font-black text-emerald-600 text-base border-b border-border pb-2 flex justify-between">
+                  <span>الأصول (Assets)</span>
+                  <span>{formatPrice(ledgersSummary.totalAssets + inventoryValue)}</span>
+                </h3>
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between font-bold text-slate-700">
+                    <span>أصول متداولة</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground pl-3">
+                    <span>الحساب البنكي الرئيسي (CIB)</span>
+                    <span>{formatPrice(120000)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground pl-3">
+                    <span>نقدية بالخزينة (Cash)</span>
+                    <span>{formatPrice(15000)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground pl-3">
+                    <span>نقدية بالدولار الأمريكي (USD)</span>
+                    <span>1,000.00 $</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground pl-3">
+                    <span>مخزون المواد الخام بالمستودع</span>
+                    <span>{formatPrice(inventoryValue)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Liabilities & Equity */}
+              <div className="space-y-4">
+                <h3 className="font-black text-rose-600 text-base border-b border-border pb-2 flex justify-between">
+                  <span>الالتزامات وحقوق الملكية</span>
+                  <span>{formatPrice(ledgersSummary.totalAssets + inventoryValue)}</span>
+                </h3>
+                <div className="space-y-4 text-xs">
+                  {/* Liabilities */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-bold text-slate-700">
+                      <span>الالتزامات المطلوبة (Liabilities)</span>
+                      <span>{formatPrice(12000)}</span>
+                    </div>
+                    <div className="flex justify-between text-muted-foreground pl-3">
+                      <span>الموردون والدائنون (حسابات جارية)</span>
+                      <span>{formatPrice(12000)}</span>
+                    </div>
+                  </div>
+
+                  {/* Equity */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-bold text-slate-700">
+                      <span>حقوق الملكية (Equity)</span>
+                      <span>
+                        {formatPrice(ledgersSummary.totalAssets + inventoryValue - 12000)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-muted-foreground pl-3">
+                      <span>رأس المال المدفوع للشركاء</span>
+                      <span>{formatPrice(211500)}</span>
+                    </div>
+                    <div className="flex justify-between text-muted-foreground pl-3">
+                      <span>أرباح العام المحجوزة</span>
+                      <span>
+                        {formatPrice(summary.total + 12500 - (summary.totalCost + 1500) - 7200)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* 4. CASH FLOW TAB */}
+        <TabsContent value="cashflow" className="space-y-4 mt-4">
+          <Card className="border-border">
+            <CardHeader className="text-center border-b border-border">
+              <CardTitle className="text-lg font-black">
+                قائمة التدفقات النقدية (Cash Flow Statement)
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6 space-y-4 text-sm">
+              <div className="space-y-2">
+                <p className="font-bold text-emerald-600 border-b border-border pb-1">
+                  1. الأنشطة التشغيلية (Operating Activities)
+                </p>
+                <div className="space-y-1 pl-4 text-xs text-muted-foreground">
+                  <div className="flex justify-between">
+                    <span>النقد المحصل من مبيعات المطعم اليومية</span>
+                    <span className="text-emerald-600">+{formatPrice(summary.total)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>النقد المدفوع لشراء مواد غذائية خام للمطبخ</span>
+                    <span className="text-rose-600">-{formatPrice(summary.totalCost)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>رواتب ومكافآت العاملين مدفوعة نقدياً</span>
+                    <span className="text-rose-600">{formatPrice(-4500)}</span>
+                  </div>
+                </div>
+              </div>
+
