@@ -3,20 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
- */
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -61,22 +47,21 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  /* Juba Restaurant — warm burgundy + amber palette */
-  --background: oklch(0.98 0.012 75);
+  --radius: 0.75rem;
+  --background: oklch(0.975 0.012 75);
   --foreground: oklch(0.22 0.03 30);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.22 0.03 30);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.22 0.03 30);
-  --primary: oklch(0.42 0.14 25); /* deep burgundy */
+  --primary: oklch(0.42 0.14 25);
   --primary-foreground: oklch(0.98 0.012 75);
   --primary-glow: oklch(0.55 0.17 30);
   --secondary: oklch(0.94 0.02 70);
   --secondary-foreground: oklch(0.28 0.05 30);
   --muted: oklch(0.95 0.015 70);
   --muted-foreground: oklch(0.5 0.04 40);
-  --accent: oklch(0.78 0.15 75); /* warm amber/gold */
+  --accent: oklch(0.78 0.15 75);
   --accent-foreground: oklch(0.22 0.06 30);
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(0.98 0.012 75);
@@ -85,8 +70,8 @@
   --ring: oklch(0.42 0.14 25);
   --gradient-primary: linear-gradient(135deg, oklch(0.42 0.14 25), oklch(0.55 0.17 30));
   --gradient-accent: linear-gradient(135deg, oklch(0.78 0.15 75), oklch(0.7 0.16 55));
-  --shadow-card: 0 1px 3px oklch(0.3 0.05 30 / 0.08), 0 4px 12px oklch(0.3 0.05 30 / 0.06);
-  --shadow-elegant: 0 10px 30px -10px oklch(0.42 0.14 25 / 0.3);
+  --shadow-card: 0 1px 3px oklch(0.3 0.05 30 / 0.08), 0 8px 24px oklch(0.3 0.05 30 / 0.06);
+  --shadow-elegant: 0 16px 40px -16px oklch(0.42 0.14 25 / 0.28);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -109,19 +94,19 @@
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
   --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
+  --primary: oklch(0.72 0.14 35);
+  --primary-foreground: oklch(0.16 0.03 30);
   --secondary: oklch(0.279 0.041 260.031);
   --secondary-foreground: oklch(0.984 0.003 247.858);
   --muted: oklch(0.279 0.041 260.031);
   --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
+  --accent: oklch(0.72 0.14 75);
+  --accent-foreground: oklch(0.16 0.03 30);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
+  --ring: oklch(0.7 0.12 35);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -129,12 +114,12 @@
   --chart-5: oklch(0.645 0.246 16.439);
   --sidebar: oklch(0.208 0.042 265.755);
   --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary: oklch(0.7 0.14 35);
   --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
   --sidebar-accent: oklch(0.279 0.041 260.031);
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --sidebar-ring: oklch(0.7 0.12 35);
 }
 
 @layer base {
@@ -142,9 +127,228 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    min-height: 100vh;
+    font-family: Cairo, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: oklch(0.78 0.15 75 / 0.35);
+    color: var(--color-foreground);
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* =========================================================
+   RESTOCASH MODERN UI LAYER
+   Visual-only system shared by POS, Captain, Oven, Admin,
+   Inventory, Accounting, Reports, Mall and setup screens.
+   ========================================================= */
+
+@layer components {
+  .font-cairo {
+    font-family: Cairo, ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .app-surface,
+  .dashboard-surface {
+    background:
+      radial-gradient(circle at 100% 0%, oklch(0.9 0.08 75 / 0.22), transparent 28rem),
+      radial-gradient(circle at 0% 100%, oklch(0.55 0.12 25 / 0.08), transparent 24rem),
+      var(--color-background);
+  }
+
+  .glass-panel {
+    background: oklch(1 0 0 / 0.78);
+    border: 1px solid oklch(0.9 0.02 65 / 0.9);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .modern-card {
+    border: 1px solid var(--color-border);
+    border-radius: 1.15rem;
+    background: var(--color-card);
+    box-shadow: var(--shadow-card);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+
+  .modern-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-elegant);
+    border-color: oklch(0.78 0.15 75 / 0.55);
+  }
+
+  .modern-button {
+    border-radius: 0.85rem;
+    font-weight: 800;
+    transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+  }
+
+  .modern-button:hover {
+    transform: translateY(-1px);
+    filter: saturate(1.08);
+  }
+
+  .modern-button:active {
+    transform: translateY(0) scale(0.985);
+  }
+
+  .page-title {
+    letter-spacing: -0.025em;
+    font-weight: 900;
+  }
+
+  .stat-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 1.2rem;
+    background: var(--color-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .stat-card::after {
+    content: "";
+    position: absolute;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 999px;
+    inset-inline-end: -3rem;
+    top: -3rem;
+    background: oklch(0.78 0.15 75 / 0.12);
+    pointer-events: none;
+  }
+
+  .table-shell {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 1.15rem;
+    background: var(--color-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .table-shell table {
+    width: 100%;
+  }
+
+  .table-shell thead {
+    background: oklch(0.96 0.018 70);
+  }
+
+  .table-shell th {
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .table-shell tbody tr {
+    transition: background-color 140ms ease;
+  }
+
+  .table-shell tbody tr:hover {
+    background: oklch(0.97 0.02 75 / 0.7);
+  }
+
+  .form-panel {
+    border: 1px solid var(--color-border);
+    border-radius: 1.2rem;
+    background: var(--color-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .form-panel input,
+  .form-panel textarea,
+  .form-panel select {
+    border-radius: 0.8rem;
+    transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+  }
+
+  .form-panel input:focus,
+  .form-panel textarea:focus,
+  .form-panel select:focus {
+    border-color: oklch(0.55 0.17 30);
+    box-shadow: 0 0 0 3px oklch(0.55 0.17 30 / 0.12);
+  }
+
+  .status-pulse {
+    animation: restocash-pulse 2.2s ease-in-out infinite;
+  }
+
+  .page-enter {
+    animation: restocash-page-in 280ms ease-out both;
+  }
+}
+
+@keyframes restocash-page-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes restocash-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.62; }
+}
+
+/* Modern, quiet scrollbar across desktop/tablet screens. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.72 0.04 55) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: oklch(0.72 0.04 55 / 0.7);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.55 0.08 35 / 0.8);
+}
+
+/* Responsive polish without changing application behavior. */
+@media (max-width: 768px) {
+  .modern-card,
+  .stat-card,
+  .form-panel,
+  .table-shell {
+    border-radius: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.2rem;
   }
 }
 
@@ -158,7 +362,6 @@
     overflow: visible !important;
   }
 
-  /* Reset fixed overlays and modals so they don't clip or block print */
   div,
   section,
   main,
@@ -168,12 +371,10 @@
     backdrop-filter: none !important;
   }
 
-  /* Hide non-printable elements */
   body * {
     visibility: hidden !important;
   }
 
-  /* Show only invoice or printable area */
   #invoice,
   #invoice *,
   .printable-area,
